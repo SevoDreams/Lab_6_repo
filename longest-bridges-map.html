@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <title>U.S. Bridges Map</title>
+</head>
+<body>
+    <style>
+        #bridges-map {
+            width: 700px;
+            height: 600px;
+            border: 1px navy solid;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+
+    <section>
+        <h1>Map of The Longest <span style="color: blue; text-decoration: overline dotted gray;">United</span> <span style="color: red;">States</span> Bridges</h1>
+        <div id="bridges-map"></div>
+    </section>
+
+    
+    <script async defer>
+        let centralAmerica = [39.8283, -98.5795]
+        let zoomLevel = 4
+        let map = L.map('bridges-map').setView(centralAmerica, zoomLevel)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        let bridges = [
+            {'Bridge Name': 'Verrazano-Narrows Bridge', 'City': 'New York, NY', 'Span': 1298.4, 'Location': [40.6066, -74.0447]},
+            {'Bridge Name': 'Golden Gate Bridge', 'City': 'San Francisco and Marin, CA', 'Span': 1280.2, 'Location': [37.8199, -122.4783]},
+            {'Bridge Name': 'Mackinac Bridge', 'City': 'Mackinaw and St Ignace, MI', 'Span': 1158.0, 'Location': [45.8174, -84.7278]},
+            {'Bridge Name': 'George Washington Bridge', 'City': 'New York, NY and New Jersey, NJ', 'Span': 1067.0, 'Location': [40.8517, -73.9527]},
+            {'Bridge Name': 'Tacoma Narrows Bridge', 'City': 'Tacoma and Kitsap, WA', 'Span': 853.44, 'Location': [47.2690, -122.5517]}
+        ]
+
+        bridges.forEach((bridgeObject) => {
+            L.marker(bridgeObject['Location'])
+                .bindPopup(`${bridgeObject['Bridge Name']}<br>${bridgeObject['Span']}m<br>${bridgeObject['City']}`)
+                .addTo(map)
+        })
+    </script>
+
+</body>
+</html>
